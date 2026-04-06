@@ -10,7 +10,9 @@ export default function NewUser() {
   const [subCategories, setSubCategories] = useState([]);
 
   const editingUser = location.state?.userData;
-  const API_BASE_URL = "http://localhost:5000/api";
+  
+  // استدعاء الرابط من ملف الـ .env
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const [formData, setFormData] = useState({
     name: editingUser?.user_first_name || "",
@@ -38,7 +40,7 @@ export default function NewUser() {
       }
     };
     fetchCats();
-  }, []);
+  }, [API_BASE_URL]);
 
   // 2. Fetch Subcategories based on Category
   useEffect(() => {
@@ -56,8 +58,11 @@ export default function NewUser() {
     } else {
       setSubCategories([]);
     }
-    if (!editingUser) setFormData(prev => ({ ...prev, subCategoryId: "" }));
-  }, [formData.categoryId]);
+    // تصفير الفرعي فقط عند الإضافة وليس التعديل لأول مرة
+    if (!editingUser && formData.categoryId) {
+        setFormData(prev => ({ ...prev, subCategoryId: "" }));
+    }
+  }, [formData.categoryId, API_BASE_URL, editingUser]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -119,7 +124,7 @@ export default function NewUser() {
           <ChevronLeft size={24} />
         </Link>
         <h1 className="text-xl font-bold text-[#16423C]">
-          {editingUser ? "Edit Admin: " + editingUser.user_first_name : "Add New System Admin"}
+          {editingUser ? `Edit Admin: ${editingUser.user_first_name}` : "Add New System Admin"}
         </h1>
       </div>
 

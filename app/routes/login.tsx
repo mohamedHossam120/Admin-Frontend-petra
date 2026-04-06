@@ -14,7 +14,6 @@ export default function Login() {
 
   useEffect(() => {
     setIsClient(true);
-    // حماية الصفحة: لو فيه توكن فعلاً يرجعه للهوم
     if (localStorage.getItem("token")) {
       navigate("/");
     }
@@ -35,14 +34,12 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        // تخزين البيانات الأساسية
         localStorage.setItem("token", data.token);
         
         const adminData = data.data || {};
         localStorage.setItem("role", adminData.role || "admin");
         localStorage.setItem("userName", data.name || adminData.name || "Petra Admin");
         
-        // لو الباك إند باعت صورة للأدمن خزنها برضو
         if (adminData.profile_image) {
           localStorage.setItem("userImage", adminData.profile_image);
         }
@@ -65,7 +62,6 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-[#C4DAD2] p-4 font-sans selection:bg-[#16423C] selection:text-white">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-2xl border border-[#E9EFEC] animate-in fade-in zoom-in duration-500">
         
-        {/* Logo & Header */}
         <div className="text-center">
           <div className="mx-auto h-20 w-20 bg-[#16423C] flex items-center justify-center rounded-2xl shadow-lg rotate-3 mb-6">
             <span className="text-white text-3xl font-black tracking-tighter">P.</span>
@@ -74,7 +70,6 @@ export default function Login() {
           <p className="mt-2 text-sm text-[#6A9C89] font-medium">Log in to Petra Administration Panel</p>
         </div>
 
-        {/* Error Message Section */}
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg flex items-center gap-3 animate-shake">
             <AlertCircle className="text-red-500 shrink-0" size={20} />
@@ -84,7 +79,6 @@ export default function Login() {
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-5">
-            {/* Email Field */}
             <div className="space-y-1">
               <label className="text-xs font-black uppercase text-[#16423C] ml-1 tracking-widest">Email Address</label>
               <div className="relative group">
@@ -103,7 +97,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div className="space-y-1">
               <div className="flex justify-between items-center ml-1">
                 <label className="text-xs font-black uppercase text-[#16423C] tracking-widest">Password</label>
@@ -133,7 +126,6 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
@@ -147,7 +139,6 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Footer Info */}
         <p className="text-center text-[10px] text-[#6A9C89] uppercase font-bold tracking-widest mt-8">
           Secure Encrypted Connection • Petra CMS v1.0
         </p>

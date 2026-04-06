@@ -44,7 +44,6 @@ export default function UserList() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<any>(null);
 
-  // Filter and Search
   const filteredUsers = useMemo(() => {
     return initialUsers.filter((user) => {
       const matchesSearch = user.name
@@ -58,7 +57,6 @@ export default function UserList() {
     });
   }, [searchQuery, statusFilter]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredUsers.length / entriesPerPage);
   const paginatedUsers = useMemo(() => {
     const lastIndex = currentPage * entriesPerPage;
@@ -79,13 +77,11 @@ export default function UserList() {
 
   const confirmDelete = () => {
     console.log("Deleted user:", userToDelete?.name);
-    // call API
     setIsDeleteModalOpen(false);
     setUserToDelete(null);
   };
   return (
     <div className="space-y-6">
-      {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h1 className="text-xl font-semibold text-gray-800 px-4 py-2 ">
           System Users Management
@@ -118,7 +114,6 @@ export default function UserList() {
           </select>
         </div>
 
-        {/* Search Bar */}
         <div className="relative max-w-xs w-full">
           <input
             type="text"
@@ -136,7 +131,6 @@ export default function UserList() {
         </div>
       </div>
 
-      {/* Table Section */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -261,7 +255,6 @@ export default function UserList() {
           </div>
         )}
 
-        {/* Pagination Footer */}
         <div className="p-4 flex items-center justify-between border-t border-gray-100 text-sm text-gray-600">
           <div className="flex items-center gap-2 font-medium">
             Show

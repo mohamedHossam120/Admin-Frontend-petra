@@ -32,7 +32,6 @@ const ServiceManagement: React.FC = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // 2. جلب البيانات من السيرفر
   const fetchServices = async () => {
     try {
       setLoading(true);
@@ -119,7 +118,6 @@ const ServiceManagement: React.FC = () => {
              </div>
           </div>
 
-          {/* Table Container */}
           <div className="overflow-x-auto rounded-lg border border-[#C4DAD2] bg-white shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>

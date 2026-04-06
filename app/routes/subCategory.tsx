@@ -10,7 +10,6 @@ interface SubCategoryData {
   subcategory_status: 'active' | 'inactive';
 }
 
-// واجهة بسيطة للأقسام الأب
 interface Category {
   category_id: number;
   category_name: string;
@@ -23,7 +22,7 @@ const SubCategoryPage: React.FC = () => {
   const [idToDelete, setIdToDelete] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SubCategoryData[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]); // لتخزين الأقسام الأساسية
+  const [categories, setCategories] = useState<Category[]>([]); 
   const [searchTerm, setSearchTerm] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -34,13 +33,12 @@ const SubCategoryPage: React.FC = () => {
     image: null as File | null
   });
 
-  // جلب الأقسام الفرعية والأقسام الأساسية
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const [subRes, catRes] = await Promise.all([
         axios.get(`${API_URL}/subcategories/getall`),
-        axios.get(`${API_URL}/categories/getall`) // نفترض وجود هذا المسار
+        axios.get(`${API_URL}/categories/getall`) 
       ]);
       
       if (subRes.data.success) setData(subRes.data.data);
@@ -56,7 +54,6 @@ const SubCategoryPage: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
-  // تعامل مع تغيير الصورة للمعاينة
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
@@ -65,7 +62,6 @@ const SubCategoryPage: React.FC = () => {
     }
   };
 
-  // ... (toggleStatus و confirmDelete تظل كما هي مع تحديث الـ URL)
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,7 +92,6 @@ const SubCategoryPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#C4DAD2] p-6 text-[#16423C] font-sans relative">
-      {/* ... (مودال الحذف والجزء العلوي من القائمة) ... */}
 
       {view === 'add' && (
         <div className="max-w-3xl mx-auto bg-[#E9EFEC] p-10 rounded-2xl shadow-xl animate-in slide-in-from-right">
@@ -135,7 +130,6 @@ const SubCategoryPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Icon / Image Upload with Preview */}
             <div>
               <label className="text-sm font-bold block mb-1">Icon / Image</label>
               <div className="relative border-2 border-dashed border-[#6A9C89] p-6 rounded-2xl text-center cursor-pointer hover:bg-white/50">

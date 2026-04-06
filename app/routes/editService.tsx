@@ -39,7 +39,6 @@ const EditService: React.FC = () => {
             status: s.status || 'active'
           });
 
-          // منطق عرض الصورة: لو الرابط يبدأ بـ http استخدمه، لو اسم ملف ضيف عليه مسار الـ uploads
           if (s.image) {
             const imageUrl = s.image.startsWith('http') 
               ? s.image 
@@ -66,7 +65,6 @@ const EditService: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setImageFile(file);
-      // تنظيف الرابط القديم لو موجود لتوفير الذاكرة
       if (imagePreview && imagePreview.startsWith('blob:')) {
         URL.revokeObjectURL(imagePreview);
       }
@@ -121,7 +119,6 @@ const EditService: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Title */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-black uppercase text-gray-500">Service Name</label>
             <input
@@ -134,7 +131,6 @@ const EditService: React.FC = () => {
             />
           </div>
 
-          {/* Price */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-black uppercase text-gray-500">Base Price (EGP)</label>
             <input
@@ -147,7 +143,6 @@ const EditService: React.FC = () => {
             />
           </div>
 
-          {/* Max Price */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-black uppercase text-gray-500">Max Price (Optional)</label>
             <input
@@ -159,7 +154,6 @@ const EditService: React.FC = () => {
             />
           </div>
 
-          {/* Commission */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-black uppercase text-gray-500">Commission Rate (e.g. 0.15)</label>
             <input
@@ -172,7 +166,6 @@ const EditService: React.FC = () => {
             />
           </div>
 
-          {/* Status */}
           <div className="flex flex-col gap-2 md:col-span-2">
             <label className="text-xs font-black uppercase text-gray-500">Visibility Status</label>
             <select
@@ -186,7 +179,6 @@ const EditService: React.FC = () => {
             </select>
           </div>
 
-          {/* Description */}
           <div className="flex flex-col gap-2 md:col-span-2">
             <label className="text-xs font-black uppercase text-gray-500">Service Description</label>
             <textarea

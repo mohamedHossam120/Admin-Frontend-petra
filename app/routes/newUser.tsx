@@ -11,7 +11,6 @@ export default function NewUser() {
 
   const editingUser = location.state?.userData;
   
-  // استدعاء الرابط من ملف الـ .env
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const [formData, setFormData] = useState({
@@ -28,7 +27,6 @@ export default function NewUser() {
     subCategoryId: editingUser?.subcategory_id || ""
   });
 
-  // 1. Fetch Categories
   useEffect(() => {
     const fetchCats = async () => {
       try {
@@ -42,7 +40,6 @@ export default function NewUser() {
     fetchCats();
   }, [API_BASE_URL]);
 
-  // 2. Fetch Subcategories based on Category
   useEffect(() => {
     if (formData.categoryId) {
       const fetchSubs = async () => {
@@ -58,7 +55,6 @@ export default function NewUser() {
     } else {
       setSubCategories([]);
     }
-    // تصفير الفرعي فقط عند الإضافة وليس التعديل لأول مرة
     if (!editingUser && formData.categoryId) {
         setFormData(prev => ({ ...prev, subCategoryId: "" }));
     }

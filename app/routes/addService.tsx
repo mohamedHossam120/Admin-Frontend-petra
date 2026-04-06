@@ -19,7 +19,6 @@ export default function AddService() {
   const [loadingSubs, setLoadingSubs] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // استخدام الرابط من ملف .env
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [form, setForm] = useState({
@@ -33,7 +32,6 @@ export default function AddService() {
     description: "",
   });
 
-  // 1. جلب كل الأقسام الرئيسية عند فتح الصفحة
   useEffect(() => {
     const fetchCats = async () => {
       try {
@@ -49,7 +47,6 @@ export default function AddService() {
     fetchCats();
   }, [API_URL]);
 
-  // 2. جلب الأقسام الفرعية "فقط" التابعة للقسم المختار
   useEffect(() => {
     const fetchSubs = async () => {
       if (!form.category) {
@@ -75,7 +72,6 @@ export default function AddService() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 3. إرسال البيانات للباك إند
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.serviceName || !form.category || !form.subCategory || !form.price) {
@@ -88,13 +84,13 @@ export default function AddService() {
       const dataToSend = {
         name: form.serviceName,
         category: form.category,
-        sub_category: form.subCategory, // مطابق لاسم العمود في DB
+        sub_category: form.subCategory, 
         description: form.description,
         price: form.price,
         max_price: form.price,
         admin_commission_rate: form.commissionValue,
         status: form.status,
-        image: "default_service.png" // يمكن تطويرها لرفع صور لاحقاً
+        image: "default_service.png" 
       };
 
       const res = await axios.post(`${API_URL}/services/add`, dataToSend);
@@ -111,7 +107,6 @@ export default function AddService() {
 
   return (
     <div className="min-h-screen bg-[#6A9C89] p-6 text-black font-sans">
-      {/* Header */}
       <div className="flex justify-between items-center mb-8 max-w-5xl mx-auto">
         <h1 className="text-2xl font-bold text-white tracking-tight">Add New Service</h1>
         <button 
@@ -125,13 +120,11 @@ export default function AddService() {
       <form onSubmit={handleSubmit} className="bg-[#E9EFEC] p-8 rounded-2xl shadow-2xl max-w-5xl mx-auto border border-white/20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* Service Name */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Service Name *</label>
             <input required name="serviceName" value={form.serviceName} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-[#6A9C89] outline-none transition-all" placeholder="Enter service name" />
           </div>
 
-          {/* Category Select */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Main Category *</label>
             <select required name="category" value={form.category} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#6A9C89] bg-white">
@@ -142,7 +135,6 @@ export default function AddService() {
             </select>
           </div>
 
-          {/* Sub-Category Select */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Sub-Category *</label>
             <select required name="subCategory" value={form.subCategory} onChange={handleChange} disabled={!form.category || loadingSubs} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#6A9C89] bg-white disabled:bg-gray-100 transition-all">
@@ -153,19 +145,16 @@ export default function AddService() {
             </select>
           </div>
 
-          {/* Price */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Base Price *</label>
             <input required type="number" name="price" value={form.price} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#6A9C89]" placeholder="0.00" />
           </div>
 
-          {/* Commission */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Admin Commission *</label>
             <input required type="number" name="commissionValue" value={form.commissionValue} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#6A9C89]" placeholder="Commission" />
           </div>
 
-          {/* Status */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#16423C]">Status *</label>
             <select name="status" value={form.status} onChange={handleChange} className={`w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none font-bold ${form.status === 'active' ? 'text-green-600' : 'text-red-600'}`}>
@@ -175,13 +164,11 @@ export default function AddService() {
           </div>
         </div>
 
-        {/* Description */}
         <div className="mt-8 space-y-2">
           <label className="text-sm font-bold text-[#16423C]">Service Description</label>
           <textarea name="description" value={form.description} onChange={handleChange} rows={4} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#6A9C89] resize-none" placeholder="Provide details about the service..." />
         </div>
 
-        {/* Footer Actions */}
         <div className="flex justify-end gap-4 mt-10 border-t border-gray-200 pt-8">
           <button 
             type="button" 
